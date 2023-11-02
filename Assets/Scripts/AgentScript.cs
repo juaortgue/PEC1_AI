@@ -2,23 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using BansheeGz.BGSpline.Curve;
 
 public class AgentScript : MonoBehaviour
 {
-    public List<Transform> waypoints; // Lista de los objetos que representan los waypoints
+     public BGCurve curve;
     private int currentWaypointIndex = 0; // Índice del waypoint actual
     private NavMeshAgent agent; // Componente NavMeshAgent del agente
-     private float minSpeed = 5f; // Velocidad mínima del agente
+    private float minSpeed = 5f; // Velocidad mínima del agente
     private float maxSpeed = 15f; // Velocidad máxima del agente
+    private List<Vector3> pointsOnCurve; // Lista de puntos en la curva
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>(); 
-        currentWaypointIndex = Random.Range(0, waypoints.Count-1); 
+        
+        if (curve == null) return;
+        pointsOnCurve = new List<Vector3>();
+        for (int i = 0; i < curve.PointsCount; i++)
+        {
+            BGCurvePointI point = curve[i];
+            pointsOnCurve.Add(point.PositionWorld);
+        }
+        //currentWaypointIndex = Random.Range(0, pointsOnCurve.Count-1); 
+
         SetRandomSpeed();
         SetDestination();
         
     }
+     
     void SetRandomSpeed(){
         agent.speed = Random.Range(minSpeed, maxSpeed); 
 
@@ -26,17 +38,17 @@ public class AgentScript : MonoBehaviour
 
     void SetDestination()
     {
-        if (waypoints.Count == 0) return; 
-        agent.SetDestination(waypoints[currentWaypointIndex].position); 
+        if (pointsOnCurve.Count == 0) return; 
+        agent.SetDestination(pointsOnCurve[currentWaypointIndex]); 
     }
 
     void Update()
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count; 
+            currentWaypointIndex = (currentWaypointIndex + 1) % pointsOnCurve.Count; 
             SetDestination(); 
-            
+           
         }
     }
      void SetRandomRotation()
