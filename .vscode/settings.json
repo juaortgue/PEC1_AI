@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Pec1_IA.sln"
+    "dotnet.defaultSolution": "PEC1_AI.sln",
+    "dotnet.preferCSharpExtension": true
 }

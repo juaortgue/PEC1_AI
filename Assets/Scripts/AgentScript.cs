@@ -5,20 +5,29 @@ using UnityEngine.AI;
 
 public class AgentScript : MonoBehaviour
 {
-    public NavMeshAgent agent;
+    public List<Transform> waypoints; // Lista de los objetos que representan los waypoints
+    private int currentWaypointIndex = 0; // Índice del waypoint actual
+    private NavMeshAgent agent; // Componente NavMeshAgent del agente
+
     void Start()
     {
-         
+        agent = GetComponent<NavMeshAgent>(); // Obtener el componente NavMeshAgent del agente
+        SetDestination(); // Establecer el destino inicial
     }
 
-    void Update(){
-        if (Input.GetMouseButtonDown(0)){
-            RaycastHit hit;
-            Ray camRay =
-            Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(camRay, out hit, 100)){
-                agent.destination = hit.point;
-            }
+    void SetDestination()
+    {
+        if (waypoints.Count == 0) return; // Si no hay waypoints, salir
+        agent.SetDestination(waypoints[currentWaypointIndex].position); // Establecer el destino al waypoint actual
+    }
+
+    void Update()
+    {
+        // Si el agente está cerca del waypoint actual, pasar al siguiente
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count; // Avanzar al siguiente waypoint
+            SetDestination(); // Establecer el nuevo destino
         }
     }
 }
