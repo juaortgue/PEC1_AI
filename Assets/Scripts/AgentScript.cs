@@ -14,9 +14,14 @@ public class AgentScript : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>(); 
+        currentWaypointIndex = Random.Range(0, waypoints.Count-1); 
+        SetRandomSpeed();
         SetDestination();
+        
+    }
+    void SetRandomSpeed(){
         agent.speed = Random.Range(minSpeed, maxSpeed); 
-        SetRandomRotation();
+
     }
 
     void SetDestination()
@@ -30,16 +35,13 @@ public class AgentScript : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count; 
-            agent.speed = Random.Range(minSpeed, maxSpeed);
-            Debug.Log("velocidad = "+agent.speed);
             SetDestination(); 
-            SetRandomRotation();
+            
         }
     }
      void SetRandomRotation()
     {
-        float randomYRotation = Random.Range(0, 360); // Generar un ángulo aleatorio en el eje Y (vertical)
-        transform.rotation = Quaternion.Euler(50, randomYRotation, 40); // Aplicar la rotación aleatoria al agente
-        Debug.Log("rotacion = "+transform.rotation);
+        float randomYRotation = Random.Range(0, 180); 
+        transform.rotation = Quaternion.Euler(0, randomYRotation, 0); 
     }
 }
