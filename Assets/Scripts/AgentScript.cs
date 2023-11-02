@@ -7,11 +7,11 @@ using BansheeGz.BGSpline.Curve;
 public class AgentScript : MonoBehaviour
 {
      public BGCurve curve;
-    private int currentWaypointIndex = 0; // Índice del waypoint actual
-    private NavMeshAgent agent; // Componente NavMeshAgent del agente
-    private float minSpeed = 5f; // Velocidad mínima del agente
-    private float maxSpeed = 15f; // Velocidad máxima del agente
-    private List<Vector3> pointsOnCurve; // Lista de puntos en la curva
+    private int currentWaypointIndex = 0;
+    private NavMeshAgent agent;
+    private float minSpeed = 5f; 
+    private float maxSpeed = 15f; 
+    private List<Vector3> pointsOnCurve; 
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class AgentScript : MonoBehaviour
             BGCurvePointI point = curve[i];
             pointsOnCurve.Add(point.PositionWorld);
         }
-        //currentWaypointIndex = Random.Range(0, pointsOnCurve.Count-1); 
+        currentWaypointIndex = Random.Range(0, pointsOnCurve.Count-1); 
 
         SetRandomSpeed();
         SetDestination();
