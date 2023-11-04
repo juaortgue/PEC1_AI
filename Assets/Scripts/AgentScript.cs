@@ -6,7 +6,7 @@ using BansheeGz.BGSpline.Curve;
 
 public class AgentScript : MonoBehaviour
 {
-     public BGCurve curve;
+    public BGCurve curve;
     private int currentWaypointIndex = 0;
     private NavMeshAgent agent;
     private float minSpeed = 5f; 
