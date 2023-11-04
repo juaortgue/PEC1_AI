@@ -12,6 +12,7 @@ public class AgentScript : MonoBehaviour
     private float minSpeed = 5f; 
     private float maxSpeed = 15f; 
     private List<Vector3> pointsOnCurve; 
+    private bool direction;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class AgentScript : MonoBehaviour
         currentWaypointIndex = Random.Range(0, pointsOnCurve.Count-1); 
 
         SetRandomSpeed();
+        SetRandomDirection();
         SetDestination();
         
     }
@@ -46,14 +48,26 @@ public class AgentScript : MonoBehaviour
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            currentWaypointIndex = (currentWaypointIndex + 1) % pointsOnCurve.Count; 
-            SetDestination(); 
-           
+            if (direction)
+            {
+                currentWaypointIndex = (currentWaypointIndex + 1) % pointsOnCurve.Count;
+            }
+            else
+            {
+                currentWaypointIndex = (currentWaypointIndex - 1 + pointsOnCurve.Count) % pointsOnCurve.Count;
+            }
+
+            SetDestination();
         }
     }
-     void SetRandomRotation()
+
+     void SetRandomDirection()
     {
-        float randomYRotation = Random.Range(0, 180); 
-        transform.rotation = Quaternion.Euler(0, randomYRotation, 0); 
+          int num = Random.Range(0, 2); 
+          if(num==0){
+            direction=true;
+          }else{
+            direction=false;
+          }
     }
 }
