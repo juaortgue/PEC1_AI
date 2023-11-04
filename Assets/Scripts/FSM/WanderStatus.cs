@@ -25,7 +25,6 @@ public class WanderStatus : IActualStatus
     {
         if (!fsm.navMeshAgent.pathPending && fsm.navMeshAgent.remainingDistance < 0.5f)
         {
-            //SetRandomSpeed();
             SetRandomDestination();
         }
     }
@@ -37,5 +36,14 @@ public class WanderStatus : IActualStatus
     public void ToRestStatus(){
         fsm.actualStatus = fsm.restStatus;
     }
-
+    private void OnTriggerEnter(Collider other)
+    {   
+        Debug.Log($"COLISIONA");
+        if (other.CompareTag("banch"))
+        {
+            Debug.Log("¡Ha colisionado con un banco!");
+            // Agrega aquí la lógica para cambiar al estado de reposo
+            //ToRestStatus();
+        }
+    }
 }
