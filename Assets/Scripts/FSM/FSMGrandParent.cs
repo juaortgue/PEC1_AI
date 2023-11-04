@@ -23,5 +23,12 @@ public class FSMGrandParent : MonoBehaviour
     {
         actualStatus.UpdateStatus();
     }
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        actualStatus.OnTriggerEnter (other);
+    }
+    void OnTriggerExit(Collider other)
+    {
+        actualStatus.OnTriggerExit(other);
+    }
 }

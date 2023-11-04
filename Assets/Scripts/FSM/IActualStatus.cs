@@ -6,4 +6,7 @@ public interface IActualStatus
     void UpdateStatus();
     void ToWanderStatus();
     void ToRestStatus();
+    void OnTriggerEnter(Collider other);
+    void OnTriggerExit(Collider other);
+
 }
